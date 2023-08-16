@@ -1,23 +1,24 @@
-package com.example.gestaodeprojetos.model;
+package com.novidades.gestaodeprojetos.model;
 
 import java.util.Collection;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
 
 @Entity
-@SequenceGenerator(name = "generator_usuario", sequenceName = "sequence_usuario", initialValue = 1, allocationSize = 1)
+@SequenceGenerator(name ="generator_usuario", sequenceName = "sequence_usuario", initialValue = 1, allocationSize = 1)
 public class Usuario implements UserDetails {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator_usuario")
     private Long id;
@@ -79,10 +80,11 @@ public class Usuario implements UserDetails {
         this.senha = senha;
     }
 
-    // UserDetails methods
+    //Daqui pra baixo é implementação o userdetails
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        // TODO Auto-generated method stub
         return null;
     }
 
@@ -120,6 +122,6 @@ public class Usuario implements UserDetails {
     @JsonIgnore
     public boolean isEnabled() {
         return true;
-    }
+    }   
 
 }

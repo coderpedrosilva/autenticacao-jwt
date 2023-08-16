@@ -1,4 +1,4 @@
-package com.example.gestaodeprojetos;
+package com.novidades.gestaodeprojetos;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

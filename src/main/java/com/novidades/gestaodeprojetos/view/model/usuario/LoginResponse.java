@@ -1,16 +1,16 @@
-package com.example.gestaodeprojetos.view.model.usuario;
+package com.novidades.gestaodeprojetos.view.model.usuario;
 
-import com.example.gestaodeprojetos.model.Usuario;
+import com.novidades.gestaodeprojetos.model.Usuario;
 
 public class LoginResponse {
 
     private String token;
-    private String usuario;
+    private Usuario usuario;
 
-    public LoginResponse(String token2, Usuario usuario2) {
+    public LoginResponse() {
     }
 
-    public LoginResponse(String token, String usuario) {
+    public LoginResponse(String token, Usuario usuario) {
         this.token = token;
         this.usuario = usuario;
     }
@@ -23,11 +23,11 @@ public class LoginResponse {
         this.token = token;
     }
 
-    public String getUsuario() {
+    public Usuario getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(String usuario) {
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 

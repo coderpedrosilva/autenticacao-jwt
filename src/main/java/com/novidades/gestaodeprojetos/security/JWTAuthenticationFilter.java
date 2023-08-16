@@ -1,8 +1,17 @@
-package com.example.gestaodeprojetos.security;
+package com.novidades.gestaodeprojetos.security;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.InputMismatchException;
 import java.util.Optional;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.novidades.gestaodeprojetos.model.Usuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,11 +22,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
 @Component
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
@@ -27,51 +31,53 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
-    // Método principal onde toda a requisição bate antes de chegar no nosso
-    // endpoint
+    // Metodo principal onde toda a requisição bate antes de chegar no nosso
+    // endpoint.
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        // Pega o token de dentro da requisição
+        // Pego o token de dentro da requisição.
         String token = obterToken(request);
 
-        // Pega o id do usuario que esta dentro do token
-        Optional<Long> id = jwtService.obterIdDoUsuario(token);
+        // Pego o id do usuário qu está dentro do token.
+        Optional<Long> id = jwtService.obterIdDoUuario(token);
 
-        // Se não achou o id, é porque o usuário não mandou o token correto
+        // Se não achou o id, é porque o usuario não mandou o token correto.
         if (id.isPresent()) {
 
-            // Pega o usuário dono do token pelo seu id
+            // Pego o usuario dono do token pelo seu Id.
             UserDetails usuario = customUserDetailsService.obterUsuarioPorId(id.get());
 
-            // Nesse ponto verificamos se o usuário está autenticado ou não
-            // Aqui também poderiamos validar as permissões
+            // Nesse ponto verificamos se o usuario está autenticado ou não.
+            // Aqui também poderiamos validar as permissões.
             UsernamePasswordAuthenticationToken autenticacao = new UsernamePasswordAuthenticationToken(usuario, null,
                     Collections.emptyList());
 
-            // Mudando a autenticação para a própria requisição
-            autenticacao.setDetails(
-                    new WebAuthenticationDetailsSource().buildDetails(request));
+            // Mudando a autenticação para a propria requisição.
+            autenticacao.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-            // Repasso a autenticação para o contexto do security
-            // A partir de agora o Spring toma conta de tudo para mim
+            // Repasso a autenticação para o contexto o security.
+            // A partir de agora o spring toma conta de tudo pra mim.
             SecurityContextHolder.getContext().setAuthentication(autenticacao);
         }
-        // Método padrão para filtrar as regras do usuário
+
+        // Metodo padrão para filtrar as regras do usuário.
         filterChain.doFilter(request, response);
+
     }
 
     private String obterToken(HttpServletRequest request) {
 
         String token = request.getHeader("Authorization");
 
-        // Verifica se veio alguma coisa sem ser espaços em branco dentro do token
-        if (StringUtils.hasText(token)) {
+        // Verifica se veio alguma coisa sem ser espaços em brancos dentro do token.
+        if (!StringUtils.hasText(token)) {
             return null;
         }
 
         return token.substring(7);
+        // Bearer as42fgh452.asadfdgfdghdfg.a2511dsadasdasdd
     }
 
 }

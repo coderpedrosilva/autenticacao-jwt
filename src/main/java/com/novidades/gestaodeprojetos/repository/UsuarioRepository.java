@@ -1,11 +1,11 @@
-package com.example.gestaodeprojetos.repository;
+package com.novidades.gestaodeprojetos.repository;
 
 import java.util.Optional;
 
+import com.novidades.gestaodeprojetos.model.Usuario;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import com.example.gestaodeprojetos.model.Usuario;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {

@@ -1,4 +1,9 @@
-package com.example.gestaodeprojetos.view.controller;
+package com.novidades.gestaodeprojetos.view.controller;
+
+import com.novidades.gestaodeprojetos.model.Usuario;
+import com.novidades.gestaodeprojetos.service.UsuarioService;
+import com.novidades.gestaodeprojetos.view.model.usuario.LoginRequest;
+import com.novidades.gestaodeprojetos.view.model.usuario.LoginResponse;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,37 +17,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.gestaodeprojetos.model.Usuario;
-import com.example.gestaodeprojetos.service.UsuarioService;
-import com.example.gestaodeprojetos.view.model.usuario.LoginRequest;
-import com.example.gestaodeprojetos.view.model.usuario.LoginResponse;
-
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/usuarios")
 public class UsuarioController {
 
     @Autowired
-    private UsuarioService servicoUsuario;
+    private UsuarioService servicoUsuario; 
 
     @GetMapping
-    public List<Usuario> obterTodos() {
+    public List<Usuario> obterTodos(){
         return servicoUsuario.obterTodos();
     }
-
+    
     @GetMapping("/{id}")
-    public Optional<Usuario> obter(@PathVariable("id") Long id) {
+    public Optional<Usuario> obter(@PathVariable("id") long id){
         return servicoUsuario.obterPorId(id);
     }
 
     @PostMapping
-    public Usuario adicionar(@RequestBody Usuario usuario) {
+    public Usuario adicionar (@RequestBody Usuario usuario){
         return servicoUsuario.adicionar(usuario);
     }
 
     @PostMapping("/login")
-    public LoginResponse login(@RequestBody LoginRequest request) {
+    public LoginResponse login(@RequestBody LoginRequest request){
         return servicoUsuario.logar(request.getEmail(), request.getSenha());
     }
-
 }
