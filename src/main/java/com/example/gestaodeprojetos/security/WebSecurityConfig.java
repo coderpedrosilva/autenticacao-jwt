@@ -66,7 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
 
-                // Daqi pra baixo é onde nós vamos fazer nossas validações
+                // Daqui pra baixo é onde nós vamos fazer nossas validações
                 // Aqui vamos informar as rotas que não precisam de autenticação
 
                 .antMatchers(HttpMethod.POST, "/api/usuarios", "/api/usuarios/login")
@@ -77,7 +77,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Aqui informamos que antes qualquer requisição http, o sistema deve usar o
         // nosso filtro jwtAuthenticationFilter
-        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        // http.addFilterBefore(jwtAuthenticationFilter,
+        // UsernamePasswordAuthenticationFilter.class);
     }
 
 }
