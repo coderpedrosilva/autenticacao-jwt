@@ -54,7 +54,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                 Collections.emptyList());
 
         // Mudando a autenticação para a própria requisição
-        autenticacao.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        autenticacao.setDetails(
+                new WebAuthenticationDetailsSource().buildDetails(request));
 
         // Repasso a autenticação para o contexto do security
         // A partir de agora o Spring toma conta de tudo para mim
