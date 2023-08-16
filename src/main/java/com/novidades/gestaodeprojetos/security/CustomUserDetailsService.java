@@ -1,17 +1,12 @@
 package com.novidades.gestaodeprojetos.security;
 
-import java.util.Optional;
-import java.util.function.Supplier;
-
-import com.novidades.gestaodeprojetos.model.Usuario;
-import com.novidades.gestaodeprojetos.repository.UsuarioRepository;
-// import com.novidades.gestaodeprojetos.service.UsuarioService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import com.novidades.gestaodeprojetos.repository.UsuarioRepository;
+// import com.novidades.gestaodeprojetos.service.UsuarioService;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -33,7 +28,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     // private Usuario getUser(Supplier<Optional<Usuario>> supplier){
-    //     return supplier.get().orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+    // return supplier.get().orElseThrow(() -> new
+    // UsernameNotFoundException("Usuário não encontrado"));
     // }
-    
+
 }

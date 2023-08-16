@@ -1,15 +1,9 @@
 package com.novidades.gestaodeprojetos.service;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Optional;
-
-import com.novidades.gestaodeprojetos.model.Usuario;
-import com.novidades.gestaodeprojetos.repository.UsuarioRepository;
-import com.novidades.gestaodeprojetos.security.JWTService;
-import com.novidades.gestaodeprojetos.view.model.usuario.LoginResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,9 +13,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.novidades.gestaodeprojetos.model.Usuario;
+import com.novidades.gestaodeprojetos.repository.UsuarioRepository;
+import com.novidades.gestaodeprojetos.security.JWTService;
+import com.novidades.gestaodeprojetos.view.model.usuario.LoginResponse;
+
 @Service
 public class UsuarioService {
-    
+
     private static final String hederPrefix = "Bearer ";
     @Autowired
     private UsuarioRepository repositorioUsuario;
@@ -35,22 +34,22 @@ public class UsuarioService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    public List<Usuario> obterTodos(){
+    public List<Usuario> obterTodos() {
         return repositorioUsuario.findAll();
     }
 
-    public Optional<Usuario> obterPorId(long id){
+    public Optional<Usuario> obterPorId(long id) {
         return repositorioUsuario.findById(id);
     }
 
-    public Optional<Usuario> obterPorEmail(String email){
+    public Optional<Usuario> obterPorEmail(String email) {
         return repositorioUsuario.findByEmail(email);
     }
 
-    public Usuario adicionar(Usuario usuario){
+    public Usuario adicionar(Usuario usuario) {
         usuario.setId(null);
 
-        if(obterPorEmail(usuario.getEmail()).isPresent()){
+        if (obterPorEmail(usuario.getEmail()).isPresent()) {
             // Aqui poderia lançar uma exception informando que o usuario já existe.
             throw new InputMismatchException("Já existe um usuario cadastro com o email: " + usuario.getEmail());
         }
@@ -59,16 +58,16 @@ public class UsuarioService {
         String senha = passwordEncoder.encode(usuario.getSenha());
 
         usuario.setSenha(senha);
-        
+
         return repositorioUsuario.save(usuario);
     }
 
-    public LoginResponse logar(String email, String senha){
+    public LoginResponse logar(String email, String senha) {
         // Aqui que a autenticação acontece magicamente.
         Authentication autenticacao = authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(email, senha, Collections.emptyList()));
+                new UsernamePasswordAuthenticationToken(email, senha, Collections.emptyList()));
 
-            // Aqui eu passo a nova autenticação para o Spring Security cuidar pra mim.
+        // Aqui eu passo a nova autenticação para o Spring Security cuidar pra mim.
         SecurityContextHolder.getContext().setAuthentication(autenticacao);
 
         // Gero o token do usuario para devolver a ele.
@@ -77,6 +76,6 @@ public class UsuarioService {
 
         Usuario usuario = repositorioUsuario.findByEmail(email).get();
 
-        return new LoginResponse(token, usuario);      
+        return new LoginResponse(token, usuario);
     }
 }

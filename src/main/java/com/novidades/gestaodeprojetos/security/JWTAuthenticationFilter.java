@@ -1,17 +1,13 @@
 package com.novidades.gestaodeprojetos.security;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.InputMismatchException;
 import java.util.Optional;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.novidades.gestaodeprojetos.model.Usuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
